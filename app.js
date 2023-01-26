@@ -7,9 +7,10 @@ app.set('view engine', 'ejs');
 let myName = 'Lauren';
 
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
 //   res.send('Hello World, this is november');
-  res.send(`<h3> Hi, ${ myName }</h3>`);
+  let result = await res.send(`<h3> Hi, ${ myName }</h3>`);
+  console.log(myName);
 })
 
 app.get('/show', (req, res) => {
@@ -18,13 +19,21 @@ app.get('/show', (req, res) => {
 
 })
 
+console.log('before app dot get to /ejs')
+
 app.get('/ejs', (req, res) => {
     // ejs stuff here
     // use res.render to load up an ejs view file
 
-        res.render('index');
+    console.log("in res render /ejs:", myName);
+        res.render('index',{ myName: myName}); //left one is ejs, right is node
+        console.log("after res render /ejs:", myName);
     
 
+})
+
+app.get('/name', (req,res)=>{
+  console.log("in get to /name:", req.query.ejsFormName)
 })
 
 console.log('in the node console');
